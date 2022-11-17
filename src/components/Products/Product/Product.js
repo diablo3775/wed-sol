@@ -11,34 +11,43 @@ import {
 } from "../../../redux/Shopping/shopping-actions";
 import HeartOutlined from "@ant-design/icons/HeartOutlined";
 import ShoppingCartOutlined from "@ant-design/icons/ShoppingCartOutlined";
+import { useState } from "react";
+
 
 const Product = ({ product, addToCart, loadCurrentItem, wishList }) => {
+  const [toggleHeart, setToggleHeart] = useState(false)
+
+  function changeColor()  {
+    setToggleHeart(!toggleHeart)
+  }
+
   return (
     <Section>
-      <div key={product.id}>
-                        <Link to={`/product/${product.id}`} >
-                        <img src={product.image} alt="product images" onClick={() => loadCurrentItem(product)} />
-                        </Link>
-                        <Heading1>
-                        <h1>{product.brand}<HeartOutlined style={{marginLeft:3}} onClick={() => wishList(product.id)} /></h1>
-                        </Heading1>
-                        <Heading2>
-                        <h2>{product.title}</h2>
-                        </Heading2>
-                        <Heading3>
-                        <h2>Rs.{product.sellingPrice}
-                        <span>Rs.{product.mrp}</span>
-                        <span>({product.offer}%off)</span>
-                        <span>
-                            <button onClick={() => addToCart(product.id)}>
-                            <ShoppingCartOutlined />
-                            </button>
-                          </span>
-                        </h2>
-                        </Heading3>   
-                    </div>
-      
-     </Section>
+      <div key={product.id + 1}>
+        <Link to={`/product/${product.id}`} >
+          <img src={product.image} alt="product images" onClick={() => loadCurrentItem(product)} />
+        </Link>
+        <Heading1>
+          <h1 className='a'>{product.brand}
+          <HeartOutlined className={ toggleHeart ? 'heart active' : 'heart' } 
+                         onClick={() => {changeColor();wishList(product.id)}}
+          />
+          <div onClick={() => addToCart(product.id)}>
+                <ShoppingCartOutlined  />
+          </div>
+          </h1>
+        </Heading1>
+        <Heading2>
+          <h2>{product.title}</h2>
+        </Heading2>
+        <Heading3>
+          <h2>Rs.{product.sellingPrice}
+            <span>Rs.{product.mrp}</span>
+            <span>({product.offer}%off)</span>
+          </h2>
+        </Heading3>
+      </div>
+    </Section>
   );
 };
 
@@ -52,14 +61,20 @@ const Heading1 = styled.div`
     font-size: 10px;
     line-height: 1;
     color: #282c3f;
-
+    
+    h1 {
+    display: flex;
+    span {
+      color: rgb(182, 173, 173);
+      cursor: pointer;
+      &.active {
+        color: rgb(192, 39, 39);
+      }
+    }
+  }
     span {
       margin-left: 5px;
       cursor: pointer;
-
-      &:hover {
-        color: #535766;
-      }
     }
 `
 
@@ -93,7 +108,7 @@ const Heading3 = styled.div`
     }
   }
 
-  button {
+  div {
     width: 35px;
     height: 35px;
     border: 1px solid var(--secondary-color);
@@ -104,7 +119,7 @@ const Heading3 = styled.div`
     margin-left: 10px;
   }
 
-  button:hover {
+  div:hover {
     color: #535766;
   }
 `;
