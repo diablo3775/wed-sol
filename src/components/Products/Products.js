@@ -110,13 +110,14 @@ const Sort = styled.div`
 
 const Sidebar = styled.div`
 margin-top: 60px;
-&  div{
-  /* box-shadow: 0px 0px 5px #ccc; */
-}
 `
 
 const Size = styled.div`
  margin: 0.1rem;
+
+ span {
+  padding: 5px;
+ }
 
  & p{
     font-size: 1rem;
