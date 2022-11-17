@@ -196,7 +196,7 @@ const shopReducer = (state = INITIAL_STATE, action) => {
               item.id === action.payload.id 
                 ? { ...item, qty: item.qty + 0 }
                 : item
-            )
+            ).filter((item) => item.id !== action.payload.id)
          : [wishList, ...state.wishList],
       };
 
